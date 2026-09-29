@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Wollega University Clearance System</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" data-sidebar>
+    <div class="sidebar__brand">
+      <span class="brand__mark">WU</span>
+      <span><span class="brand__text-primary">Wollega University</span><br><span class="brand__text-secondary">Registrar Admin</span></span>
+    </div>
+    <nav class="sidebar__nav">
+      <a href="admin-dashboard.html" class="is-active"><i class="fa-solid fa-gauge-high"></i> Admin Dashboard</a>
+    </nav>
+    <div class="sidebar__footer">
+      <button class="sidebar__logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Log Out</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="sidebar-toggle" data-sidebar-toggle><i class="fa-solid fa-bars"></i></button>
+        <h1>Admin Dashboard</h1>
+      </div>
+      <div class="topbar__right"><div class="topbar__user"><span data-session-name>Admin</span></div></div>
+    </header>
+
+    <main class="page-body">
+      <div class="page-head">
+        <div><h2 style="margin:0;">Registrar Overview</h2><p>Manage clearance requests for every student on campus.</p></div>
+      </div>
+
+      <div class="stats-grid" style="grid-template-columns:repeat(5,1fr);">
+        <div class="stat-card stat-card--total">
+          <div class="stat-card__icon"><i class="fa-solid fa-users"></i></div>
+          <div><div class="stat-card__value" data-admin-total-students>0</div><div class="stat-card__label">Total Students</div></div>
+        </div>
+        <div class="stat-card stat-card--pending">
+          <div class="stat-card__icon"><i class="fa-solid fa-hourglass-half"></i></div>
+          <div><div class="stat-card__value" data-admin-pending>0</div><div class="stat-card__label">Pending Requests</div></div>
+        </div>
+        <div class="stat-card stat-card--completed">
+          <div class="stat-card__icon"><i class="fa-solid fa-circle-check"></i></div>
+          <div><div class="stat-card__value" data-admin-approved>0</div><div class="stat-card__label">Approved Requests</div></div>
+        </div>
+        <div class="stat-card stat-card--rejected">
+          <div class="stat-card__icon"><i class="fa-solid fa-circle-xmark"></i></div>
+          <div><div class="stat-card__value" data-admin-rejected>0</div><div class="stat-card__label">Rejected Requests</div></div>
+        </div>
+        <div class="stat-card stat-card--completed">
+          <div class="stat-card__icon"><i class="fa-solid fa-file-shield"></i></div>
+          <div><div class="stat-card__value" data-admin-completed>0</div><div class="stat-card__label">Fully Cleared</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-toolbar">
+          <div class="input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="plain" style="padding-left:40px;" placeholder="Search by name or student ID..." oninput="handleAdminSearch(event)">
+          </div>
+          <select class="plain" onchange="handleAdminFilter(event)">
+            <option value="All">All Statuses</option>
+            <option value="Cleared">Cleared</option>
+            <option value="Pending">Pending</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Student ID</th><th>Name</th><th>Department</th><th>Progress</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody data-admin-tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Student review modal -->
+<div class="modal-overlay" id="student-review-modal">
+  <div class="modal modal--wide">
+    <div class="modal-header">
+      <button class="modal__close" data-close-modal><i class="fa-solid fa-xmark"></i></button>
+      <h2 id="review-student-name" style="font-size:1.15rem;">Student Name</h2>
+      <p id="review-student-meta" style="margin:0;font-size:.85rem;">Student ID - Department</p>
+    </div>
+    <div id="review-office-list"></div>
+    <button class="btn btn--outline btn--block" style="margin-top:18px;" data-close-modal>Close</button>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/admin.js"></script>
+<script>renderAdminDashboard();</script>
+</body>
+</html>

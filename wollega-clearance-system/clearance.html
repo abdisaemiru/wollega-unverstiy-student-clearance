@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clearance Status | Wollega University Clearance System</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" data-sidebar>
+    <div class="sidebar__brand">
+      <span class="brand__mark">WU</span>
+      <span><span class="brand__text-primary">Wollega University</span><br><span class="brand__text-secondary">Clearance Portal</span></span>
+    </div>
+    <nav class="sidebar__nav">
+      <a href="student-dashboard.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <a href="clearance.html" class="is-active"><i class="fa-solid fa-list-check"></i> Clearance Status</a>
+      <a href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a>
+      <a href="notifications.html"><i class="fa-solid fa-bell"></i> Notifications</a>
+      <a href="certificate.html"><i class="fa-solid fa-file-shield"></i> Certificate</a>
+    </nav>
+    <div class="sidebar__footer">
+      <button class="sidebar__logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Log Out</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="sidebar-toggle" data-sidebar-toggle><i class="fa-solid fa-bars"></i></button>
+        <h1>Clearance Status</h1>
+      </div>
+      <div class="topbar__right">
+        <a href="notifications.html" class="icon-btn"><i class="fa-solid fa-bell"></i><span class="icon-btn__dot"></span></a>
+        <div class="topbar__user">
+          <div class="topbar__avatar" data-student-initials-generic>--</div>
+          <span data-session-name>Student</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-body">
+      <div class="page-head">
+        <div>
+          <h2 style="margin:0;">Track every office</h2>
+          <p data-clearance-summary>Loading progress...</p>
+        </div>
+        <button class="btn btn--gold" onclick="showRequestTab()"><i class="fa-solid fa-paper-plane"></i> Request Clearance</button>
+      </div>
+
+      <div class="auth-tabs" style="max-width:340px;margin-bottom:22px;">
+        <button type="button" id="tab-status" class="is-active" onclick="showStatusTab()">Status</button>
+        <button type="button" id="tab-request" onclick="showRequestTab()">Request Clearance</button>
+      </div>
+
+      <!-- ================= STATUS TABLE ================= -->
+      <div class="card" id="status-panel">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Office</th><th>Status</th><th>Date</th><th>Officer Comment</th><th>Action</th></tr>
+            </thead>
+            <tbody data-clearance-tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ================= REQUEST FORM ================= -->
+      <div class="card is-hidden" id="request-panel">
+        <h3 style="margin-bottom:6px;">Submit a Clearance Request</h3>
+        <p style="font-size:.9rem;margin-bottom:22px;">Confirm your details below and describe why you're requesting clearance.</p>
+        <form id="request-form" onsubmit="return handleRequestSubmit(event)">
+          <div class="info-list" style="margin-bottom:18px;">
+            <div class="form-group"><label>Student ID</label><input class="plain" name="studentId" readonly></div>
+            <div class="form-group"><label>Full Name</label><input class="plain" name="fullName" readonly></div>
+            <div class="form-group"><label>Department</label><input class="plain" name="department" readonly></div>
+            <div class="form-group"><label>College</label><input class="plain" name="college" readonly></div>
+            <div class="form-group"><label>Program</label><input class="plain" name="program" readonly></div>
+            <div class="form-group"><label>Graduation Year</label><input class="plain" name="graduationYear" readonly></div>
+            <div class="form-group"><label for="req-phone">Phone Number</label><input class="plain" id="req-phone" name="phone" required></div>
+            <div class="form-group"><label for="req-email">Email</label><input class="plain" id="req-email" name="email" type="email" required></div>
+          </div>
+          <div class="form-group">
+            <label for="req-reason">Reason for Clearance</label>
+            <textarea class="plain" id="req-reason" name="reason" rows="4" placeholder="e.g. Graduating this semester and need final clearance." required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--lg"><i class="fa-solid fa-paper-plane"></i> Submit Clearance Request</button>
+        </form>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Clearance detail modal -->
+<div class="modal-overlay" id="clearance-detail-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal__close" data-close-modal><i class="fa-solid fa-xmark"></i></button>
+      <h2 id="detail-office" style="font-size:1.15rem;">Office</h2>
+    </div>
+    <div class="info-list" style="margin-bottom:8px;">
+      <div class="info-list__item"><dt>Status</dt><dd id="detail-status"></dd></div>
+      <div class="info-list__item"><dt>Date</dt><dd id="detail-date"></dd></div>
+    </div>
+    <div class="form-group">
+      <label>Officer Comment</label>
+      <p id="detail-comment" style="background:var(--forest-100);padding:12px 14px;border-radius:8px;font-size:.88rem;"></p>
+    </div>
+    <button class="btn btn--outline btn--block" data-close-modal>Close</button>
+  </div>
+</div>
+
+<!-- Request confirmation modal -->
+<div class="modal-overlay" id="request-confirm-modal">
+  <div class="modal">
+    <div class="modal-icon-success"><i class="fa-solid fa-check"></i></div>
+    <h2 style="text-align:center;font-size:1.2rem;">Request Submitted</h2>
+    <p style="text-align:center;font-size:.9rem;">Your clearance request (<strong id="confirm-request-id"></strong>) has been submitted and is now pending review by each office.</p>
+    <button class="btn btn--primary btn--block" data-close-modal onclick="showStatusTab()">Back to Status</button>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/student.js"></script>
+<script>
+  renderClearanceTable();
+  prefillRequestForm();
+
+  function showStatusTab() {
+    document.getElementById("tab-status").classList.add("is-active");
+    document.getElementById("tab-request").classList.remove("is-active");
+    document.getElementById("status-panel").classList.remove("is-hidden");
+    document.getElementById("request-panel").classList.add("is-hidden");
+    renderClearanceTable();
+  }
+  function showRequestTab() {
+    document.getElementById("tab-request").classList.add("is-active");
+    document.getElementById("tab-status").classList.remove("is-active");
+    document.getElementById("request-panel").classList.remove("is-hidden");
+    document.getElementById("status-panel").classList.add("is-hidden");
+  }
+  if (window.location.hash === "#request") showRequestTab();
+
+  // fill the generic avatar initials in the topbar
+  document.addEventListener("DOMContentLoaded", async () => {
+    const session = getSession();
+    if (session) {
+      try {
+        const student = await getStudentById(session.id);
+        document.querySelector("[data-student-initials-generic]").textContent = student.avatarInitials;
+      } catch (err) {
+        // ignore — topbar just keeps its placeholder initials
+      }
+    }
+  });
+</script>
+</body>
+</html>

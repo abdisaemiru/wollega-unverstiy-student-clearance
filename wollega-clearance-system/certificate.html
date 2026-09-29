@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clearance Certificate | Wollega University Clearance System</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" data-sidebar>
+    <div class="sidebar__brand">
+      <span class="brand__mark">WU</span>
+      <span><span class="brand__text-primary">Wollega University</span><br><span class="brand__text-secondary">Clearance Portal</span></span>
+    </div>
+    <nav class="sidebar__nav">
+      <a href="student-dashboard.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <a href="clearance.html"><i class="fa-solid fa-list-check"></i> Clearance Status</a>
+      <a href="profile.html"><i class="fa-solid fa-user"></i> My Profile</a>
+      <a href="notifications.html"><i class="fa-solid fa-bell"></i> Notifications</a>
+      <a href="certificate.html" class="is-active"><i class="fa-solid fa-file-shield"></i> Certificate</a>
+    </nav>
+    <div class="sidebar__footer">
+      <button class="sidebar__logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Log Out</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="sidebar-toggle" data-sidebar-toggle><i class="fa-solid fa-bars"></i></button>
+        <h1>Clearance Certificate</h1>
+      </div>
+      <div class="topbar__right"><div class="topbar__user"><span data-session-name>Student</span></div></div>
+    </header>
+
+    <main class="page-body">
+
+      <!-- Shown when the student is not yet fully cleared -->
+      <div class="not-cleared-block" data-not-cleared>
+        <div class="icon-lg"><i class="fa-solid fa-hourglass-half"></i></div>
+        <h2>Certificate not yet available</h2>
+        <p>You still have <strong data-remaining-count>0</strong> office(s) left to clear before your certificate is generated. Check your <a href="clearance.html" style="color:var(--forest-700);font-weight:600;">Clearance Status</a> page for details.</p>
+        <a href="clearance.html" class="btn btn--primary">View Clearance Status</a>
+      </div>
+
+      <!-- Shown once fully cleared -->
+      <div class="certificate-wrap is-hidden" data-certificate>
+        <div>
+          <div class="certificate">
+            <div class="certificate__seal"><i class="fa-solid fa-award"></i></div>
+            <p class="certificate__university">WOLLEGA UNIVERSITY &middot; NEKEMTE, ETHIOPIA</p>
+            <h2 class="certificate__title">Certificate of Clearance</h2>
+            <p class="certificate__subtitle">STUDENT ONLINE CLEARANCE SYSTEM</p>
+            <p class="certificate__body">
+              This is to certify that the student named below has satisfied all clearance
+              requirements across every university office and department.
+            </p>
+            <strong class="certificate__name" data-cert-name style="text-align:center;">Student Name</strong>
+
+            <dl class="certificate__grid">
+              <div><dt>Student ID</dt><dd data-cert-id>-</dd></div>
+              <div><dt>Department</dt><dd data-cert-department>-</dd></div>
+              <div><dt>College</dt><dd data-cert-college>-</dd></div>
+              <div><dt>Program</dt><dd data-cert-program>-</dd></div>
+              <div><dt>Graduation Year</dt><dd data-cert-year>-</dd></div>
+              <div><dt>Completion Date</dt><dd data-cert-date>-</dd></div>
+            </dl>
+
+            <div class="certificate__footer">
+              <div class="certificate__signature">
+                <div class="certificate__signature-line"></div>
+                <small>Head, Registrar's Office</small>
+              </div>
+              <div class="certificate__signature">
+                <div class="certificate__signature-line"></div>
+                <small>Dean of Students</small>
+              </div>
+            </div>
+
+            <p class="certificate__reference">Reference No: <strong data-cert-reference>-</strong> &nbsp;|&nbsp; Verify at verify.wu.edu.et</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-actions is-hidden" data-cert-actions>
+        <button class="btn btn--primary btn--lg" onclick="printCertificate()"><i class="fa-solid fa-print"></i> Print Certificate</button>
+        <button class="btn btn--gold btn--lg" onclick="downloadCertificate()"><i class="fa-solid fa-download"></i> Download Certificate</button>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/student.js"></script>
+<script src="js/clearance.js"></script>
+<script>renderCertificatePage();</script>
+</body>
+</html>

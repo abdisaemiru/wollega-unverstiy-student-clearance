@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Officer Dashboard | Wollega University Clearance System</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar" data-sidebar>
+    <div class="sidebar__brand">
+      <span class="brand__mark">WU</span>
+      <span><span class="brand__text-primary">Wollega University</span><br><span class="brand__text-secondary">Department Officer</span></span>
+    </div>
+    <nav class="sidebar__nav">
+      <a href="officer-dashboard.html" class="is-active"><i class="fa-solid fa-gauge-high"></i> My Queue</a>
+    </nav>
+    <div class="sidebar__footer">
+      <button class="sidebar__logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Log Out</button>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="sidebar-toggle" data-sidebar-toggle><i class="fa-solid fa-bars"></i></button>
+        <h1>Officer Dashboard</h1>
+      </div>
+      <div class="topbar__right"><div class="topbar__user"><span data-session-name>Officer</span></div></div>
+    </header>
+
+    <main class="page-body">
+      <div class="page-head">
+        <div><h2 style="margin:0;">Clearance Requests &mdash; <span data-officer-office>Office</span></h2><p>Review, approve, or reject clearance requests assigned to your office.</p></div>
+      </div>
+
+      <div class="card">
+        <div class="table-toolbar">
+          <div class="input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="plain" style="padding-left:40px;" placeholder="Search by student name or ID..." oninput="handleOfficerSearch(event)">
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Student ID</th><th>Name</th><th>Department</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody data-officer-tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Officer review modal -->
+<div class="modal-overlay" id="officer-review-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal__close" data-close-modal><i class="fa-solid fa-xmark"></i></button>
+      <h2 id="officer-review-name" style="font-size:1.15rem;">Student Name</h2>
+      <p id="officer-review-meta" style="margin:0;font-size:.85rem;">Student ID - Office</p>
+    </div>
+    <div class="info-list" style="margin-bottom:14px;">
+      <div class="info-list__item"><dt>Current Status</dt><dd id="officer-review-status"></dd></div>
+    </div>
+    <div class="form-group">
+      <label for="officer-comment">Comment</label>
+      <textarea class="plain" id="officer-comment" rows="3" placeholder="Add a comment for the student..."></textarea>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn--approve" style="flex:1;" onclick="officerSetStatus('Approved')"><i class="fa-solid fa-check"></i> Approve</button>
+      <button class="btn btn--reject" style="flex:1;" onclick="officerSetStatus('Rejected')"><i class="fa-solid fa-xmark"></i> Reject</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script src="js/admin.js"></script>
+<script>renderOfficerDashboard();</script>
+</body>
+</html>

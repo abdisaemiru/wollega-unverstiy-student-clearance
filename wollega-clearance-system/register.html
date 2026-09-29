@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account | Wollega University Clearance System</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="auth-shell">
+  <aside class="auth-visual">
+    <div class="brand">
+      <span class="brand__mark">WU</span>
+      <span>
+        <span class="brand__text-primary" style="color:#fff;">Wollega University</span><br>
+        <span class="brand__text-secondary" style="color:rgba(255,255,255,.6);">Clearance System</span>
+      </span>
+    </div>
+    <div>
+      <p class="auth-visual__quote">"Create your account once, and every office's clearance status is a click away for the rest of your program."</p>
+      <p class="auth-visual__author">— Office of the Registrar</p>
+    </div>
+    <div style="font-size:.8rem;color:rgba(255,255,255,.5);">&copy; 2026 Wollega University</div>
+  </aside>
+
+  <div class="auth-form-side">
+    <div class="auth-card" style="max-width:480px;">
+      <a href="login.html" class="auth-card__back"><i class="fa-solid fa-arrow-left"></i> Back to login</a>
+
+      <h2 style="font-size:1.3rem;">Create Your Student Account</h2>
+      <p style="font-size:.88rem;margin-bottom:22px;">Register once to submit clearance requests and track every office's status online.</p>
+
+      <div class="form-error" id="register-error"><i class="fa-solid fa-circle-exclamation"></i><span></span></div>
+
+      <form id="register-form" onsubmit="return handleRegister(event)">
+        <div class="form-group">
+          <label for="reg-student-id">Student ID</label>
+          <div class="input-wrap"><i class="fa-solid fa-id-card"></i><input type="text" id="reg-student-id" name="studentId" placeholder="e.g. WU2027010" required></div>
+        </div>
+        <div class="form-group">
+          <label for="reg-name">Full Name</label>
+          <div class="input-wrap"><i class="fa-solid fa-user"></i><input type="text" id="reg-name" name="name" placeholder="Your full name" required></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="form-group">
+            <label for="reg-gender">Gender</label>
+            <div class="input-wrap">
+              <i class="fa-solid fa-venus-mars"></i>
+              <select id="reg-gender" name="gender" class="plain" style="padding-left:40px;" required>
+                <option value="">Select</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reg-gradyear">Graduation Year</label>
+            <div class="input-wrap"><i class="fa-solid fa-calendar"></i><input type="text" id="reg-gradyear" name="graduationYear" placeholder="e.g. 2027" required></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-college">College</label>
+          <div class="input-wrap"><i class="fa-solid fa-building-columns"></i><input type="text" id="reg-college" name="college" placeholder="e.g. College of Computing and Informatics" required></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="form-group">
+            <label for="reg-department">Department</label>
+            <div class="input-wrap"><i class="fa-solid fa-graduation-cap"></i><input type="text" id="reg-department" name="department" placeholder="e.g. Information Systems" required></div>
+          </div>
+          <div class="form-group">
+            <label for="reg-program">Program</label>
+            <div class="input-wrap"><i class="fa-solid fa-book-open"></i><input type="text" id="reg-program" name="program" placeholder="e.g. Information Systems" required></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-phone">Phone Number</label>
+          <div class="input-wrap"><i class="fa-solid fa-phone"></i><input type="text" id="reg-phone" name="phone" placeholder="+251 9XX XXX XXX" required></div>
+        </div>
+        <div class="form-group">
+          <label for="reg-email">Email</label>
+          <div class="input-wrap"><i class="fa-solid fa-envelope"></i><input type="email" id="reg-email" name="email" placeholder="you@wu.edu.et" required></div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password">Password</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="reg-password" name="password" placeholder="At least 6 characters" minlength="6" required>
+            <button type="button" class="toggle-visibility" onclick="togglePasswordVisibility('reg-password', this)"><i class="fa-solid fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reg-confirm-password">Confirm Password</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="reg-confirm-password" name="confirmPassword" placeholder="Re-enter your password" minlength="6" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--block btn--lg"><i class="fa-solid fa-user-plus"></i> Create Account</button>
+        <p style="text-align:center;font-size:.88rem;margin-top:18px;">Already have an account? <a href="login.html" style="color:var(--forest-700);font-weight:700;">Sign in</a></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Success modal -->
+<div class="modal-overlay" id="register-success-modal">
+  <div class="modal">
+    <div class="modal-icon-success"><i class="fa-solid fa-check"></i></div>
+    <h2 style="text-align:center;font-size:1.2rem;">Account Created</h2>
+    <p style="text-align:center;font-size:.9rem;">Welcome to the Wollega University Clearance Portal. Your clearance tracking has been set up across all 10 offices.</p>
+    <button class="btn btn--primary btn--block" onclick="window.location.href='student-dashboard.html'">Go to My Dashboard</button>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script>
+  function togglePasswordVisibility(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector("i");
+    const show = input.type === "password";
+    input.type = show ? "text" : "password";
+    icon.className = show ? "fa-solid fa-eye-slash" : "fa-solid fa-eye";
+  }
+
+  function showRegisterError(message) {
+    const el = document.getElementById("register-error");
+    el.querySelector("span").textContent = message;
+    el.classList.add("is-visible");
+  }
+  function hideRegisterError() {
+    document.getElementById("register-error").classList.remove("is-visible");
+  }
+
+  async function handleRegister(event) {
+    event.preventDefault();
+    hideRegisterError();
+    const form = event.target;
+
+    if (form.password.value !== form.confirmPassword.value) {
+      showRegisterError("Passwords do not match.");
+      return false;
+    }
+    if (form.password.value.length < 6) {
+      showRegisterError("Password must be at least 6 characters.");
+      return false;
+    }
+    if (!isValidEmail(form.email.value.trim())) {
+      showRegisterError("Please enter a valid email address.");
+      return false;
+    }
+    if (!isValidPhone(form.phone.value.trim())) {
+      showRegisterError("Please enter a valid phone number.");
+      return false;
+    }
+
+    const payload = {
+      studentId: form.studentId.value.trim(),
+      name: form.name.value.trim(),
+      gender: form.gender.value,
+      department: form.department.value.trim(),
+      college: form.college.value.trim(),
+      program: form.program.value.trim(),
+      graduationYear: form.graduationYear.value.trim(),
+      phone: form.phone.value.trim(),
+      email: form.email.value.trim(),
+      password: form.password.value
+    };
+
+    const submitBtn = form.querySelector("button[type=submit]");
+    submitBtn.disabled = true;
+    const result = await registerStudent(payload);
+    submitBtn.disabled = false;
+
+    if (!result.success) {
+      showRegisterError(result.message);
+      return false;
+    }
+
+    openModal("register-success-modal");
+    return false;
+  }
+</script>
+</body>
+</html>
